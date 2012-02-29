@@ -1,0 +1,165 @@
+!!! 5
+html(lang="en")
+  head
+    title Arduino control nodeuino for JavaScript and Node.js with WebSockets and HTML5
+    link(rel="stylesheet", href="/styles/bootstrap/init.css")
+    link(rel="stylesheet", href="/styles/prettify.css")
+    link(rel="stylesheet", href="/styles/init.css")
+    script(type="text/javascript", src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
+    script(type="text/javascript", src="http://localhost:8090/socket.io/socket.io.js")
+    script(type="text/javascript", src="/scripts/init.js")
+    script(type="text/javascript", src="/scripts/prettify.js")
+  body(onload="prettyPrint()")
+    .navbar.navbar-fixed-top(style="z-index: 4;position:absolute;")
+      .navbar-inner
+        .container
+          div.nav-collapse
+            ul.nav
+              li.active
+                a(href="#") Home
+              li
+                a(href="https://github.com/semu/noduino") View on GitHub &raquo;
+            div.nav-collapse.pull-right
+              ul.nav
+                li
+                  a(href="http://semu.mp") semu.mp
+                
+      a(href="#")
+        img(style="position: absolute; top: 0; right: 0; border: 0; z-index: 10;",src="/images/forkme.png",alt="Fork me on GitHub")          
+    .container
+      header.jumbotron.subhead#overview
+        h1 noduino
+        p.lead A simple and flexible JavaScript and Node.js Framework for accessing basic Arduino controls from Web Applications using HTML5, Socket.IO and Node.js.
+      .row.marketing#homeBoxes
+        .span4
+          img.bs-icon(src="/images/glyphicons_155_show_thumbnails.png")
+          h2 Easy Arduino Access
+          p Initialize your Arduino board, define registered pins and send commands. Use digital and analog read or write to use control buttons or switch connected LEDs. <strong>Listen for events</strong> happening on your Arduino to control your Web Application with analog controls…
+        .span4
+          img.bs-icon(src="/images/glyphicons_009_magic.png")
+          h2 Entirely built for fun
+          p The first version of 
+            a(href="") noduino
+            |  was completely built for fun. I had bought an Arduino, wanted to play and for no good reason tried sending commands with <strong>JavaScript</strong> using a nice <strong>HTML5</strong> interface with to my Arduino. Imagine controlling browser games with an old NES game pad!
+        .span4
+          img.bs-icon(src="/images/glyphicons_214_resize_small.png")
+          h2 Client and Server in JS
+          p Thanks to Node.js and modern web browsers all server code as well as all client code is written in JavaScript. There is no difference in accessing your Arduino over <strong>WebSocket</strong> or a <strong>Serial</strong> connection. All methods and objects remain the same, written code is highly portable.
+      section#homeContent
+        .page-header
+          h1 Connect HTML Interface to Arduino
+        .row
+          .span3
+            p Make sure your 
+              strong Arduino
+              |  is connected with your computer, this commands works fine for Mac OS X.
+          .span9
+            pre.prettyprint.linenums=examples.basics
+        .row
+          .span3
+            p 
+              strong Download
+              |  Node.js, installed needed packages with npm and start  
+              a(href="#") noduino
+              |  to see this page.
+          .span9
+            pre.prettyprint.linenums=examples.node
+        .row
+          .span3
+            p See the provided 
+              strong Examples
+              |  or establish a connection to Arduino by yourself.
+          .span9
+            pre.prettyprint.linenums=examples.connect
+        .row.example
+          .span12#exampleConnection
+            p
+              a.btn(href="#")#buttonConnect
+                i.icon-refresh
+                |  Connect to Arduino
+            .alert.alert-info Please connect to your Arduino using the button.
+            .alert.hide.alert-error Unable to connect to Arduino!
+            .alert.hide.alert-success Connection to Arduino established!
+            
+        .page-header
+          h1 Switching LED modes 
+            small  Simple methods for switching LED modes, blinking and fading…
+        .row
+          .span3
+            p When using the example from above to connect to your 
+              strong Arduino
+              |  it is very easy to 
+              strong toggle an LED
+              |  connected to pin 13. All communication between the web browser and server is handled with Socket.IO, on the server commands are send to Arduino using 
+              a(href="#") duino.
+              |  
+              strong Noduino
+              |  enables 
+              strong Real-Time Arduino
+              |  control using WebSockets!
+          .span9
+            pre.prettyprint.linenums=examples.toggleLED
+        .row.example
+          .span12#exampleLEDBlink
+            p
+              a.btn(href="#")#buttonConnect
+                i.icon-refresh
+                |  Connect to Arduino
+            .alert.alert-info Please connect to your Arduino using the button.
+            .alert.hide.alert-error Unable to connect to Arduino!
+            .alert.hide.alert-success Connection to Arduino established!
+            p
+              input.span3(type="text",placeholder="Interval in Miliseconds") 
+              |  
+              a.btn(href="#", style="margin-top: 1px;")#buttonConnect
+                i.icon-retweet
+                |  Start blinking LED 
+              |  
+              label.label(style="position: relative; top: -2px;") LED off
+            .alert.hide.alert-info Please connect to your Arduino using the button.
+            .alert.alert-error Connect to Arduino first!
+            .alert.hide.alert-success Connection to Arduino established!
+              
+
+
+        .page-header
+          h1 Listening for Events on Arduino 
+            small  Catch a button push event and fade on your LED
+        .row
+          .span3
+            p Buttons and LEDs provide a simple interface to listen for events. Use <code>Button.on()</code> or <code>LED.on()</code> for triggering your code if a button is pushed or your LED is switching modes. Multiple events for a single event are called the order they have been assigned.
+            p Use <code>Board.receive()</code> for catching all incoming data streams. You probably need this if you plan to create a <strong>Real-Time Web Application</strong> with noduino. Buzzword…
+          .span9
+            pre.prettyprint.linenums=examples.listenButton
+        .row.example
+          .span12#exampleLEDBlink
+            p
+              a.btn(href="#")#buttonConnect
+                i.icon-refresh
+                |  Connect to Arduino
+            .alert.alert-info Please connect to your Arduino using the button. 
+            .alert.hide.alert-error Unable to connect to Arduino!
+            .alert.alert-success Connected! Button is <label class="label">not pushed</label>
+            .alert.alert-success Connected! Button is <label class="label label-success">pushed</label> for 8.23 seconds now!
+            .alert.alert-success Connected! Button is <label class="label">not pushed</label> 4.32 secods remaining with LED on…
+      footer.footer
+        p.pull-right
+          a(href="#") Back to top
+        p.pull-left
+          a(href="http://arduino.cc")
+            img(src="/images/arduino.jpg", style="position: relative; margin-right: 18px; top: 5px; margin-left: 4px; border-radius: 3px;")
+        p The 
+          a(href="#") noduino
+          |  project is founded and maintained by
+          a(href="#") Sebastian Müller
+          | .
+        p Code licensed under the 
+          a(href="http://www.opensource.org/licenses/mit-license.php") MIT License
+          |  and available on 
+          a(href="#") GitHub
+          |  for free.  
+        p Layout based on 
+          a(href="#") twitter bootstrap framework
+          | . Icons from 
+          a(href="#") Glyphicons Free
+          | . 2012 Baby!
