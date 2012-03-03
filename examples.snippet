@@ -1,0 +1,75 @@
+###basics
+> ls /dev | grep usb
+crw-rw-rw-   1 root       wheel      18,  17 24 Feb 22:54 cu.usbmodem1d11
+crw-rw-rw-   1 root       wheel      18,  16 24 Feb 22:00 tty.usbmodem1d11
+
+###node
+> npm install
+> node app.js
+Listening on http://localhost:8080
+
+###toggleLED
+require(['libs/Noduino', 'libs/Noduino.Socket'], function(NoduinoObj, Connector) {
+  var Noduino = new NoduinoObj({debug: true, host: 'http://localhost:8090'}, Connector);
+  Noduino.connect(function(err, board) {
+    if (err) { return console.log(err); }
+    board.withLED({pin: 13}, function(err, LED) {
+      if (err) { return console.log(err); }
+        
+      LED.blink(250);
+      LED.on('change', function() }
+        console.log('LED changed to ' + (data.mode == Noduino.HIGH ? '[on]' : '[off]'));
+      });
+    });
+  })
+});
+
+###connect
+require(['libs/Noduino', 'libs/Noduino.Socket'], function(NoduinoObj, Connector) {
+  var Noduino = new NoduinoObj({debug: true, host: 'http://localhost:8090'}, Connector);
+  Noduino.connect(function(err, board) {
+    if (err) { return console.log(err); }
+  
+    console.log('Connected to board');
+  });
+});
+
+###listenButton
+var Noduino = new require('./libs/Noduino')({'debug': true});
+Noduino.connect({'type': 'socket'}, function(err, board) {
+  if (err) { return console.log(err); }
+  board.withButton({pin: 9}, function(err, Button)) {
+    Button.on(cnst.HIGH, function(mode) {
+      console.log('pushed!');
+    });
+
+    Button.on(cnst.LOW, function(mode) {
+      console.log('released!');
+    });
+  })
+});
+  
+###analogRead
+noduino.connect(function(err, board) {
+  if (err) { return console.log('failed to connect!'); }
+
+  console.log('connected');
+});
+
+###digitalRead
+noduino.connect(function(err, board) {
+  board.registerPin({pin: 9}, function(err, pin) {
+    pin.digitalRead(function(err, value) {
+      console.log('received value: ' + value);
+    });
+  });
+});
+
+###digitalWrite
+noduino.connect(function(err, board) {
+  board.registerPin({pin: 9}, function(err, pin) {
+    pin.digitalWrite(const.HIGH, function(err, value) {
+      console.log('set pin to value: ' + value);
+    });
+  })
+});
