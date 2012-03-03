@@ -92,3 +92,4 @@ form.well{padding:14px;}
 .response{line-height:28px;margin-left:12px;}
 .response.error{color:red;}
 label.label{display:inline;}
+#e2-secondStep select{margin-right:4px;}
