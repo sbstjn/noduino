@@ -7,6 +7,7 @@
  * @license     MIT License – http://www.opensource.org/licenses/mit-license.php 
  * @url         https://github.com/semu/noduino
  */
+ 
 define(['socket.io', 'public/scripts/libs/Noduino', 'public/scripts/libs/Noduino.Serial', 'public/scripts/libs/Logger'], function(io, Noduino, Connector, Logger) {
   
   /**
@@ -14,9 +15,9 @@ define(['socket.io', 'public/scripts/libs/Noduino', 'public/scripts/libs/Noduino
    * @param object socket Socket.IO
    */
   var SocketHandler = function(socket) {
-    this.sockets = {};
+    this.sockets  = {};
     this.arduinos = {};
-    this.handler = socket.listen(8090);
+    this.handler  = socket.listen(8090);
     this.pinCache = {};
     
     this.bindings();

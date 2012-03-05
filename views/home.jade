@@ -5,17 +5,17 @@ header.jumbotron.subhead#overview
   .span4
     img.bs-icon(src="/images/glyphicons_155_show_thumbnails.png")
     h2 Easy Arduino Access
-    p Initialize your Arduino board, define registered pins and send commands. Use digital and analog read or write to use control buttons or switch connected LEDs. <strong>Listen for events</strong> happening on your Arduino to control your Web Application with analog controls…
-  .span4
-    img.bs-icon(src="/images/glyphicons_009_magic.png")
-    h2 JS Proof of Concept
-    p The first version of 
-      a(href="") noduino
-      |  was completely built for fun. I had bought an Arduino, wanted to play and for no good reason tried sending commands with <strong>JavaScript</strong> using a nice <strong>HTML5</strong> interface with to my Arduino. Imagine controlling browser games with an old NES game pad!
+    p Initialize your Arduino board, define registered pins and send commands. Use digital and analog read or write to control buttons or switch connected LEDs. <strong>Listen for events</strong> happening on your Arduino to control your Web Application with analog controls…
   .span4
     img.bs-icon(src="/images/glyphicons_214_resize_small.png")
     h2 Client and Server in JS
     p Thanks to Node.js and modern web browsers all server code as well as all client code is written in JavaScript. There is no difference in accessing your Arduino over <strong>WebSocket</strong> or a <strong>Serial</strong> connection. All methods and objects remain the same, written code is highly portable.
+  .span4
+    img.bs-icon(src="/images/glyphicons_009_magic.png")
+    h2 JS Proof of Concept
+    p The first release of 
+      a(href="") noduino
+      |  is build for fun and as a proof of concept. For no good reason I tried sending commands to my Arduino with <strong>JavaScript</strong> using a nice <strong>HTML5</strong> interface. Imagine controlling browser games with an old NES game pad!    
 section#homeContent
   .page-header
     h1 Connect HTML Interface to Arduino
@@ -23,23 +23,19 @@ section#homeContent
     .span3
       p Make sure your 
         strong Arduino
-        |  is connected with your computer, this commands works fine for Mac OS X.
+        |  is connected with your computer, this commands works fine for me:
     .span9
       pre.prettyprint.linenums=examples.basics
   .row
     .span3
       p 
-        strong Download
-        |  Node.js, installed needed packages with npm and start  
-        a(href="#") noduino
-        |  to see this page.
+        a(href="https://github.com/semu/noduino") Download noduino
+        | , install needed packages with npm, upload <code>duino/src/du.ino</code> to your Arduino and you are good to go…
     .span9
       pre.prettyprint.linenums=examples.node
   .row
     .span3
-      p See the provided 
-        strong Examples
-        |  or establish a connection to Arduino by yourself.
+      p See the included exmaples on this page or have a look at the example wiring for firing and catching events on your Arduino!
     .span9
       pre.prettyprint.linenums=examples.connect
   .row.example
@@ -51,7 +47,6 @@ section#homeContent
       .alert.alert-info Please connect to your Arduino using the button.
       .alert.hide.alert-error Unable to connect to Arduino!
       .alert.hide.alert-success Connection to Arduino established!
-            
   .page-header
     h1 Switching LED modes 
       small  Simple methods for switching LED modes, blinking and fading…
@@ -61,13 +56,15 @@ section#homeContent
         strong Arduino
         |  it is very easy to 
         strong toggle an LED
-        |  connected to pin 13. All communication between the web browser and server is handled with Socket.IO, on the server commands are send to Arduino using 
-        a(href="#") duino.
+        |  connected to a pin on you board. All data exchange between the web browser and server is handled with Socket.IO, on the server commands are send to Arduino using 
+        a(href="https://github.com/ecto/duino") duino.
         |  
         strong Noduino
         |  enables 
         strong Real-Time Arduino
-        |  control using WebSockets!
+        |  control using WebSockets! Please see the 
+        a(href="#communication") communication schema
+        |  to get how it works…
     .span9
       pre.prettyprint.linenums=examples.toggleLED
   .row.example
@@ -101,9 +98,6 @@ section#homeContent
       .alert.hide.alert-info Please connect to your Arduino using the button.
       .alert.hide.alert-error Connect to Arduino first!
       .alert.hide.alert-success Connection to Arduino established!
-              
-
-
   .page-header
     h1 Listening for Events on Arduino 
       small  Catch a button push event and fade on your LED

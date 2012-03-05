@@ -7,8 +7,6 @@ html(lang="en")
     link(rel="stylesheet", href="/styles/init.css")
     script(data-main="/scripts/app." + jsApp, type="text/javascript", src="/scripts/vendor/require-jquery.js")
     script(type="text/javascript", src="http://localhost:8090/socket.io/socket.io.js")
-    // script(type="text/javascript", src="/scripts/init.js")
-    // script(type="text/javascript", src="/scripts/prettify.js")
   body
     .navbar.navbar-fixed-top(style="z-index: 4;position:absolute;")
       .navbar-inner
@@ -18,7 +16,7 @@ html(lang="en")
               li(class=(active == 'home' ? 'active' : ''))
                 a(href="/") Home
               li.dropdown(class=(active == 'examples' ? 'active' : ''))
-                a.dropdown-toggle(href="#",data-toggle="dropdown") Example Wiring 
+                a.dropdown-toggle(href="#",data-toggle="dropdown") Example Wirings 
                   b.caret
                 ul.dropdown-menu
                   li
@@ -29,7 +27,6 @@ html(lang="en")
               ul.nav
                 li
                   a(href="http://semu.mp") semu.mp
-                
       a(href="#")
         img(style="position: absolute; top: 0; right: 0; border: 0; z-index: 10;",src="/images/forkme.png",alt="Fork me on GitHub")          
     .container!=body
