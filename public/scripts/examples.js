@@ -22,6 +22,11 @@ define(function() {
       });      
     });
     
+    $('#e2-buttonStop').click(function(e) {
+      e.preventDefault();
+      e2.stop();
+    });
+    
     $('#e2-buttonStart').click(function(e) {
       e.preventDefault();
       $('#e2-secondStep .alert').addClass('hide');    

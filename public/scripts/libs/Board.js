@@ -1,14 +1,20 @@
-var cnst = {
-  'LED':  0x31,
-  'DIGITAL_OUT': 0x31,
-  'BOTTON': 0x32,
-  'ANALOG_IN': 0x33,
-  'HIGH': 'on',
-  'LOW': 'off',
-};
+/**
+ * Board.js – Arduino Board Controller
+ * This file is part of noduino (c) 2012 Sebastian Müller <c@semu.mp>
+ *
+ * @package     noduino
+ * @author      Sebastian Müller <c@semu.mp>
+ * @license     MIT License – http://www.opensource.org/licenses/mit-license.php 
+ * @url         https://github.com/semu/noduino
+ */
 
-define(['./LED', './Button', './AnalogInput',  './DigitalOutput', './Speaker'], function(LEDObj, ButtonObj, AnalogInputObj, DigitalOutObj, SpeakerObj) {
+define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', './Speaker.js'], function(LEDObj, ButtonObj, AnalogInputObj, DigitalOutObj, SpeakerObj) {
 
+  /**
+   * Create Board
+   * @param object options set options like pin
+   * @param object Connector switch between Serial or Socket mode
+   */
   function Board(options, Connector) { 
     if (false === (this instanceof Board)) {
       return new Board(options); }
@@ -18,40 +24,87 @@ define(['./LED', './Button', './AnalogInput',  './DigitalOutput', './Speaker'], 
     this.pinMapping = {};
   };
 
-  Board.prototype.pinType = function(pin) {
-    return this.pinMapping[pin];
-  }
-
-  Board.prototype.pinAvailable = function(pin) {
-    return (this.pinMapping[pin]);
-  };
-
+  /**
+   * Write to digital output on pin
+   * @param integer pin pin number
+   * @param string mod pin mode
+   * @param function callback
+   */
   Board.prototype.digitalWrite = function(pin, mode, next) {
     this.c.digitalWrite(pin, mode, function(err) {
       if (err) { return next(err); }
     });
   };
+  
+  /**
+   * Check if pin is already in use
+   * @param integer pin pin number
+   * @return boolean
+   */
+  Board.prototype.pinAvailable = function(pin) {
+    return (this.pinMapping[pin] ? true : false);
+  };
 
-  Board.prototype.withLED = function(options, next) {
-    return this.with(this.c.TYPE_LED, options, next);
-  };
-  
-  Board.prototype.withButton = function(options, next) {
-    return this.with(this.c.TYPE_BUTTON, options, next);
-  };
-  
-  Board.prototype.withAnalogInput = function(options, next) {
-    return this.with(this.c.TYPE_ANALOGIN, options, next);
+  /**
+   * Get type of pin on board
+   * @param integer pin pin number
+   * @return mixed
+   */
+  Board.prototype.pinType = function(pin) {
+    return this.pinMapping[pin];
   }
   
-  Board.prototype.withSpeaker = function(options, next) {
-    return this.with(this.c.TYPE_SPEAKER, options, next);
+  /**
+   * Create AnalogInput object on board
+   * @param object options
+   * @param function callback
+   */
+  Board.prototype.withAnalogInput = function(options, next) {
+    this.with(this.c.TYPE_ANALOGIN, options, next);
+  }
+  
+  /**
+   * Create Button object on board
+   * @param object options
+   * @param function callback
+   */
+  Board.prototype.withButton = function(options, next) {
+    this.with(this.c.TYPE_BUTTON, options, next);
   };
 
+  /**
+   * Create DigitalOutput object on board
+   * @param object options
+   * @param function callback
+   */
   Board.prototype.withDigitalOutput = function(options, next) {
-    return this.with(this.c.TYPE_DIGITALOUT, options, next);
+    this.with(this.c.TYPE_DIGITALOUT, options, next);
   };
 
+  /**
+   * Create LED object on board
+   * @param object options
+   * @param function callback
+   */
+  Board.prototype.withLED = function(options, next) {
+    this.with(this.c.TYPE_LED, options, next);
+  };
+
+  /**
+   * Create Speaker object on board
+   * @param object options
+   * @param function callback
+   */
+  Board.prototype.withSpeaker = function(options, next) {
+    this.with(this.c.TYPE_SPEAKER, options, next);
+  };
+
+  /**
+   * Handle object creation
+   * @param string what object type
+   * @param object options
+   * @param function callback
+   */
   Board.prototype.with = function(what, options, next) {
     if (this.pinAvailable(options.pin)) {
       return next(new Error('PIN already in use')); }
@@ -69,9 +122,7 @@ define(['./LED', './Button', './AnalogInput',  './DigitalOutput', './Speaker'], 
       case this.c.TYPE_BUTTON:  
         this.c.withButton(options.pin, function(err, pin) {
           if (err) { return next(err); }
-          var c = new ButtonObj({"pin": pin, "type": what}, that.c);
-          console.log(c);
-          next(null, c);
+          next(null, new ButtonObj({"pin": pin, "type": what}, that.c));
         });      
       break;
       case this.c.TYPE_ANALOGIN:

@@ -4,9 +4,8 @@ define(function() {
   }
   
   Example.handle = function() {
-    
-    require(['libs/Noduino', 'libs/Noduino.Socket'], function(NoduinoObj, Connector) {
-      var Noduino = new NoduinoObj({debug: true, host: 'http://localhost:8090'}, Connector);
+    require(['/scripts/libs/Noduino.js', '/scripts/libs/Noduino.Socket.js', '/scripts/libs/Logger.js'], function(NoduinoObj, Connector, Logger) {
+      var Noduino = new NoduinoObj({debug: false, host: 'http://localhost:8090'}, Connector, Logger);
       Noduino.connect(function(err, board) {
         $('#e1-exampleConnection .alert').addClass('hide'); 
         if (err) {
@@ -15,7 +14,6 @@ define(function() {
           $('#e1-exampleConnection .alert-success').removeClass('hide'); }
       });
     });
-    
   };
   
   return Example;

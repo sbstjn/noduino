@@ -7,6 +7,15 @@ define(function(require, exports, module) {
     this.options = options;
     this.boards  = [];
     this.board   = null;
+    this.logger  = null;
+  };
+  
+  SerialNoduino.prototype.setLogger = function(Logger) {
+    this.logger = Logger;
+  };
+  
+  SerialNoduino.prototype.log = function(level, msg) {
+    this.logger.msg(level, msg);
   };
 
   SerialNoduino.prototype.connection  = 'serial';
@@ -35,7 +44,7 @@ define(function(require, exports, module) {
     new Board({'debug': this.options.debug || false}, function(err, board) {
       if (err) { return next(new Error('Unable to connect')); }
       
-      // Disabled multi board support now
+      // Disabled multi board support now, but keep in mind…
       that.boards = [board]; 
       that.board  = 0;
       
@@ -60,11 +69,10 @@ define(function(require, exports, module) {
   }  
   
   SerialNoduino.prototype.digitalWrite = function(pin, mode, next) {
-    console.log('set ' + pin + ': ' + mode);
     this.current().digitalWrite(pin, mode, next);
   };  
   
-  SerialNoduino.prototype.watchAnalogIn = function(AnalogInput) {
+  SerialNoduino.prototype.watchAnalogIn = function(AnalogInput, callback) {
     var that = this;
     setInterval(function () {
       that.current().analogRead(AnalogInput.pin);
@@ -72,14 +80,13 @@ define(function(require, exports, module) {
   
     this.current().on('data', function(m) {
       m = m.split('::');
-      var eventPin = m[0]*1;
-      if (m[0].indexOf('A') > -1) {
-        eventPin = m[0]; }
-    
-      var event = {pin: eventPin, 'state': m[1]*1};
+      var event = {pin: that.normalizePin(m[0]), 'state': m[1]*1};
+      
+      if (callback) {
+        return callback(event); }      
+      
       if (event.pin == AnalogInput.pin) {
-        AnalogInput.set(event.state);
-      }
+        AnalogInput.set(event.state); }
     });
   }
   
@@ -91,20 +98,13 @@ define(function(require, exports, module) {
     return ("00" + pin).substr(-2);
   };
   
-
-  SerialNoduino.prototype.log = function (level, message) {
-    console.log(message);
-  }
-  
-  
   SerialNoduino.prototype.digitalRead = function(pin) {
-    console.log(pin);
     pin = this.normalizePin(pin);
     this.log('info', 'digitalRead from pin ' + pin);
     this.write('02' + pin + this.normalizeVal(0));
   };
   
-  SerialNoduino.prototype.watchDigitalIn = function(DigitalIn) {
+  SerialNoduino.prototype.watchDigitalIn = function(DigitalIn, callback) {
     var that = this;
 
     setInterval(function () {
@@ -113,8 +113,11 @@ define(function(require, exports, module) {
     
     this.current().on('data', function(m) {
       m = m.split('::');
-      var event = {pin: m[0]*1, 'state': m[1]*1};
-    
+      var event = {pin: that.normalizePin(m[0]), 'state': m[1]*1};
+      
+      if (callback) {
+        return callback(event); }
+        
       if (event.pin == DigitalIn.pin) {
         if (event.state == 0 && DigitalIn.isOn()) {
           DigitalIn.setOff();
@@ -124,32 +127,7 @@ define(function(require, exports, module) {
         }
       }    
     });
-  }
-
-
-  
-  /* SerialNoduino.prototype.watchDigitalIn = function(Button) {
-    var that = this;
-    
-    setInterval(function () {
-      that.digitalRead(Button.pin);
-    }, 50);
-  
-    this.current().on('data', function(m) {
-      m = m.split('::');
-      var event = {pin: m[0]*1, 'state': m[1]*1};
-    
-      if (event.pin == Button.pin) {
-        if (event.state == 0 && Button.pushed) {
-          Button.release();
-        }
-        if (event.state == 1 && !Button.pushed) {
-          Button.push();
-        }
-      }    
-    });
-  } */
+  };
   
   return SerialNoduino;  
 });
-

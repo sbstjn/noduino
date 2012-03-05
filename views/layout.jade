@@ -5,7 +5,7 @@ html(lang="en")
     link(rel="stylesheet", href="/styles/bootstrap/init.css")
     link(rel="stylesheet", href="/styles/prettify.css")
     link(rel="stylesheet", href="/styles/init.css")
-    script(data-main="scripts/main", type="text/javascript", src="/scripts/require-jquery.js")
+    script(data-main="/scripts/app." + jsApp, type="text/javascript", src="/scripts/vendor/require-jquery.js")
     script(type="text/javascript", src="http://localhost:8090/socket.io/socket.io.js")
     // script(type="text/javascript", src="/scripts/init.js")
     // script(type="text/javascript", src="/scripts/prettify.js")
@@ -15,8 +15,14 @@ html(lang="en")
         .container
           div.nav-collapse
             ul.nav
-              li.active
-                a(href="#") Home
+              li(class=(active == 'home' ? 'active' : ''))
+                a(href="/") Home
+              li.dropdown(class=(active == 'examples' ? 'active' : ''))
+                a.dropdown-toggle(href="#",data-toggle="dropdown") Example Wiring 
+                  b.caret
+                ul.dropdown-menu
+                  li
+                    a(href="/examples/walkLED.html") Adjustable LED Walker
               li
                 a(href="https://github.com/semu/noduino") View on GitHub &raquo;
             div.nav-collapse.pull-right
@@ -47,4 +53,4 @@ html(lang="en")
           a(href="#") twitter bootstrap framework
           | . Icons from 
           a(href="#") Glyphicons Free
-          | . 2012 Baby!
+          | .

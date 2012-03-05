@@ -1,3 +1,13 @@
+/**
+ * DigitalInput.js – Basic DigitalInput Controller0
+ * This file is part of noduino (c) 2012 Sebastian Müller <c@semu.mp>
+ *
+ * @package     noduino
+ * @author      Sebastian Müller <c@semu.mp>
+ * @license     MIT License – http://www.opensource.org/licenses/mit-license.php 
+ * @url         https://github.com/semu/noduino
+ */
+
 define(function() {
   
   function DigitalInput(options, Connector) {
@@ -5,7 +15,7 @@ define(function() {
       return new DigitalInput(options); }  
     
     this.c      = Connector;
-    this.pin    = options.pin;
+    this.pin    = this.c.normalizePin(options.pin);
     this.pushed = false;
     this.events = {};
     

@@ -15,11 +15,19 @@ define(function(require, exports, module) {
     this.options  = options;
     this.boards   = [];
     this.board    = null;
-    
+    this.logger   = null;
     this.io       = null;
     this.sockets  = [];
     this.callbacks= {};
     this.checkSocket();
+  };
+
+  SocketNoduino.prototype.setLogger = function(Logger) {
+    this.logger = Logger;
+  };
+  
+  SocketNoduino.prototype.log = function(level, msg) {
+    return this.logger.msg(level, msg);
   };
 
   SocketNoduino.prototype.connection  = 'serial';
@@ -42,7 +50,6 @@ define(function(require, exports, module) {
   SocketNoduino.prototype.checkSocket = function() {
     /** This is Client code: This works in your web browser */
     if (!this.io) {
-      console.log('connect to: ' + this.options.host);
       this.io = io.connect(this.options.host); 
       this.boards[0] = Board;
     }
@@ -82,19 +89,20 @@ define(function(require, exports, module) {
       this.callbacks['board.connect'] = []; }
     
     this.callbacks['board.connect'].push(next);
-    
-    this.io.emit('board.connect');
+    this.log('sending command through socket');
+    this.pushSocket('board.connect');
     
     return;
   }
   
+  SocketNoduino.prototype.pushSocket = function(type, data) {
+    this.log('socket-write', type + ': ' + JSON.stringify(data));
+    this.io.emit(type, data);
+  }
+  
   SocketNoduino.prototype.write = function(cmd, callback) {
     this.log('info', 'writing: ' + cmd);
-    this.io.emit('serial', {'type': 'write', 'write': cmd, 'id': this.io.socket.sessionid});
-  };
-  
-  SocketNoduino.prototype.sendCommand = function(cmd, callback) {
-    // this.io.emit('serial', {'send': cmd});
+    this.pushSocket('serial', {'type': 'write', 'write': cmd, 'id': this.io.socket.sessionid});
   };
 
   SocketNoduino.prototype.pinMode = function(pin, val) {
@@ -113,17 +121,12 @@ define(function(require, exports, module) {
     return ("00" + pin).substr(-2);
   };
 
-  SocketNoduino.prototype.log = function (level, message) {
-    console.log(message);
-  }
-
   SocketNoduino.prototype.withLED = function(pin, next) {
     this.pinMode(pin, this.MODE_OUT);
     next(null, pin);
   };
 
   SocketNoduino.prototype.withButton = function(pin, next) {
-    console.log('in NoduinoSocket.withButton');
     this.pinMode(pin, this.MODE_IN);
     next(null, pin);
   };
@@ -144,39 +147,36 @@ define(function(require, exports, module) {
   };  
   
   SocketNoduino.prototype.watchAnalogIn = function(AnalogInput) {
-    return; 
-    
-    
     var that = this;
-    setInterval(function () {
-      that.current().analogRead(AnalogInput.pin);
-    }, 50);
-  
-    this.current().on('data', function(m) {
-      m = m.split('::');
-      var eventPin = m[0]*1;
-      if (m[0].indexOf('A') > -1) {
-        eventPin = m[0]; }
     
-      var event = {pin: eventPin, 'state': m[1]*1};
-      if (event.pin == AnalogInput.pin) {
-        AnalogInput.set(event.state);
+    this.analogRead(AnalogInput.pin);
+    this.io.on('response', function(data) {
+      if (data.type == 'analogRead' && data.pin == AnalogInput.pin) {
+        that.log('socket-read', JSON.stringify(data));
+        var event = {pin: data.pin, value: data.value*1};
+        if (event.pin == AnalogInput.pin) {
+          AnalogInput.set(event.value);
+        }
       }
     });
   }
   
-  SocketNoduino.prototype.digitalRead = function (DigitalIn) {
-    pin = this.normalizePin(DigitalIn.pin);
-    this.io.emit('serial', {'type': 'digitalRead', 'pin': pin});
+  SocketNoduino.prototype.analogRead = function (pin) {
+    this.pushSocket('serial', {'type': 'analogRead', 'pin': this.normalizePin(pin)});
   }
   
+  SocketNoduino.prototype.digitalRead = function (pin) {
+    this.pushSocket('serial', {'type': 'digitalRead', 'pin': this.normalizePin(pin)});
+  }
   
   SocketNoduino.prototype.watchDigitalIn = function(DigitalIn) {
     var that = this;
     
+    this.digitalRead(DigitalIn.pin);
     this.io.on('response', function(data) {
-      if (data.type == 'digitalRead') {
-        console.log(data);
+      if (data.type == 'digitalRead' && data.pin == DigitalIn.pin) {
+        that.log('socket-read', JSON.stringify(data));
+        
         if (data.value == 1) {
           DigitalIn.setOn(); }
         else {

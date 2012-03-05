@@ -93,3 +93,8 @@ form.well{padding:14px;}
 .response.error{color:red;}
 label.label{display:inline;}
 #e2-secondStep select{margin-right:4px;}
+.exampleLinks{margin-top:8px;}
+.range{margin-bottom:0px;position:relative;top:-9px;margin-left:12px;width:373px;}
+.interval{margin-bottom:0px;position:relative;top:-9px;margin-left:12px;width:60px;}
+.collectedTags{margin-top:14px;}
+#connection-log{height:358px;overflow:hidden;padding-top:4px;overflow-x:hidden;margin-bottom:16px;}

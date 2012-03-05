@@ -83,12 +83,20 @@ section#homeContent
       p
         select.span2#e2-pinValue
           option(value=13) PIN: 13
+          option(value=12) PIN: 12
+          option(value=11) PIN: 11
+          option(value=10) PIN: 10
+          option(value=09) PIN: 09
         input.span3#e2-interval(type="text",placeholder="Interval in Miliseconds") 
         |  
         a.btn(href="#", style="margin-top: 1px;")#e2-buttonStart
           i.icon-retweet
           |  Start blinking LED 
         |  
+        a.btn(href="#", style="margin-top: 1px;")#e2-buttonStop
+          i.icon-off
+          |  Stop 
+        |          
         label.label#e2-status(style="position: relative; top: -2px;") LED off
       .alert.hide.alert-info Please connect to your Arduino using the button.
       .alert.hide.alert-error Connect to Arduino first!
@@ -114,3 +122,41 @@ section#homeContent
       .alert.alert-info Please connect to your Arduino using the button. 
       .alert.hide.alert-error Unable to connect to Arduino!
       .alert.hide.alert-success Connected! Button is <label class="label" id="buttonStatus">not pushed</label>
+  .page-header
+    h1 Getting started with noduino 
+      small  AnalogInput, DigitalInputs and some nice LEDs
+  .row
+    .span12
+      .hero-unit
+        img(src="/wiring/walkLED.png")
+      p Use the example wiring from above and the provided example in  
+        code examples/walkLED.js
+        |  for getting started using noduino. Read values from an analog input device like a potentiometer and watch for pressed buttons, all basic functions are shown in the example files. The needed 
+        code .fzz
+        |  file for making changes with the awesome 
+        a(href="http://fritzing.org") Fritzing Application
+        |  is included as well! If you create other wirings or find bugs in the provided ones please greate a 
+        a(href="http://github.com/semu/noduino") Pull Request on GitHub
+        | !
+  .row
+    .span12
+      p.exampleLinks
+        a.btn.btn-success(href="/examples/walkLED.html")
+          i.icon-gift.icon-white
+          |  View Example
+  .page-header
+    h1 About noduino 
+      small  Thank You Open Source!
+  .row
+    .span12
+      p The 
+        a(href="#") noduino
+        |  project was founded by 
+        a(href="#") Sebastian Müller
+        |  for fun and as a proof of concept for Node.js controlling external components over a dynamic web interface using HTML5 WebSockets. Thanks to the awesome 
+        a(href="#") Arduino
+        |  project and the German 
+        a(href="#") Fritzing Project
+        |  it's easy to get started with basic prototyping. The already existing 
+        a(href="#") duino
+        |  project helped developing the first steps and is now an imported part of noduino's core components. Thanks to the Open Source community, you made this possible! Keep the good work up…
