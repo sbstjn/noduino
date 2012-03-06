@@ -33,6 +33,13 @@ define(['kickstart', 'module', 'path', 'fs'], function (kickstart, module, path,
   });
 
   /** 
+   * Catch request for Getting Started page
+   */
+  srv.all('/getting-started.html', function(req, res) {
+    res.render('getting-started', {jsApp: 'none', active: 'getting-started', title: 'noduino', 'examples': examples});
+  });
+
+  /** 
    * Catch request for serving walkLED example page
    */
   srv.all('/examples/walkLED.html', function(req, res) {
