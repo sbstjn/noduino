@@ -1,1 +1,1 @@
-Welcome to the awesome noduino project! Alle information is available at [http://semu.githum.com/noduino/](http://semu.githum.com/noduino/)
+Welcome to the awesome Noduino project! All information is available at [http://semu.github.com/noduino/](http://semu.github.com/noduino/)
