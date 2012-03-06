@@ -71,8 +71,9 @@ header#overview
     .span12
       p The wiring above can be used to test the included HTML web interface and the Node.js access as well. Connect your Arduino to you computer and start catching events happening on your Arduino with JavaScript. For sure you can easily fire events on your Arduino too!
       pre
-        | $ > git clone git://github.com/semu/noduino.git noduino
+        | $ > git clone git@github.com:semu/noduino.git
         | $ > cd noduino/
+        | $ > git submodule update --init
         | $ > npm install
         | $ > cd examples/
         | $ > node test.walkLED.js
