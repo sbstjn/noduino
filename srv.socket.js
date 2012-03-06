@@ -18,6 +18,7 @@ define(['socket.io', 'public/scripts/libs/Noduino', 'public/scripts/libs/Noduino
     this.sockets  = {};
     this.arduinos = {};
     this.handler  = socket.listen(8090);
+    this.handler.set('origin', '*');
     this.pinCache = {};
     
     this.bindings();
