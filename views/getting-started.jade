@@ -1,0 +1,41 @@
+.page-header
+  h1 Getting Started 
+    small  with noduino
+.row
+  .span12
+    p Make sure you have a current version of 
+      a(href="http://nodejs.com") Node.js
+      |  running and have already established a connection to your Arduino with the provided SDK. I'm sorry but there is no support for getting Node.js running or how to connect to your Arduino board. Google is your best friend, I know you can do it!
+    h2 Download Noduino from GitHub
+    br 
+    .hero-unit
+      img(src="/images/getting-started/1.png")
+    h2 Upload duino to Arduino
+    br 
+    .hero-unit
+      img(src="/images/getting-started/2.png")
+    h2 Start Noduino and have fun!
+    p Start Noduino's WebSocket Server with <code>node srv.web.js</code>, connect your prepared Arduino and open <a href="http://localhost:8080">http://localhost:8080</a> with your Browser.
+    br 
+    .hero-unit
+      img(src="/images/getting-started/3.png")
+
+
+    
+.page-header
+  h1 What's next? 
+.row
+  .span12
+    p Cleaning code and rewrite most of the core parts. There is so much to do, you can help as well! Included objects like 
+      code LED
+      |  and 
+      code Button
+      |  are clean, they are written from scratch so no old lines you have to stick to. But that's not the same for some internal components. There are still some dependencies to the awesome 
+      a(href="https://github.com/ecto/duino") duino
+      |  project, I realy want to get rid of them in future releases. Duino is great, don't get me wrong, but I would like to get Noduino working without external projects, for sure all enhancements in duino's code will be commited as a pull request on GitHub so everybody profits from future development…
+    p Wanna help with 
+      a(href="https://github.com/semu/noduino") Noduino
+      | ? Create example wirings and provide example JavaScript files. Have a look at duino's code uploaded to the Arduino, fork it and enhance it. Take a look at WebSockets and the awesome
+      a(href="http://socket.io") Socket.IO
+      |  project and contribute to Noduino's WebSocket wrapper. There is so much you can do, start with 
+      a(href="https://github.com/semu/noduino") forking Noduino on GitHub!
