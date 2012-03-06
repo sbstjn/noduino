@@ -1,5 +1,5 @@
-var pv = '/scripts/vendor/';
-var pl = '/scripts/libs/';
+var pv = 'scripts/vendor/';
+var pl = 'scripts/libs/';
 require(["jquery", pv + "dropdown.js", pv + "prettify.js", pl + 'Noduino.js', pl + 'Noduino.Socket.js', pl + 'Logger.HTML.js'], function($, dd, p, NoduinoObj, Connector, Logger) {
   var Noduino = null;
 

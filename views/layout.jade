@@ -2,10 +2,10 @@
 html(lang="en")
   head
     title Arduino control nodeuino for JavaScript and Node.js with WebSockets and HTML5
-    link(rel="stylesheet", href="/styles/bootstrap/init.css")
-    link(rel="stylesheet", href="/styles/prettify.css")
-    link(rel="stylesheet", href="/styles/init.css")
-    script(data-main="/scripts/app." + jsApp, type="text/javascript", src="/scripts/vendor/require-jquery.js")
+    link(rel="stylesheet", href="styles/bootstrap/init.css")
+    link(rel="stylesheet", href="styles/prettify.css")
+    link(rel="stylesheet", href="styles/init.css")
+    script(data-main="scripts/app." + jsApp, type="text/javascript", src="scripts/vendor/require-jquery.js")
     script(type="text/javascript", src="http://localhost:8090/socket.io/socket.io.js")
   body
     .navbar.navbar-fixed-top(style="z-index: 4;position:absolute;")
@@ -22,7 +22,7 @@ html(lang="en")
                   b.caret
                 ul.dropdown-menu
                   li
-                    a(href="/examples/walkLED.html") Adjustable LED Walker
+                    a(href="/example-walkLED.html") Adjustable LED Walker
               li
                 a(href="https://github.com/semu/noduino") View on GitHub &raquo;
             div.nav-collapse.pull-right
