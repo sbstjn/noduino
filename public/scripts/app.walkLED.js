@@ -80,13 +80,9 @@ require(["jquery", pv + "dropdown.js", pv + "prettify.js", pl + 'Noduino.js', pl
     board.withButton({pin:  2}, function(err, Button) { addButton(Button); $('#btn-02').click(function(e) {e.preventDefault(); Button.setOn(); Button.setOff(); }); });
     board.withButton({pin:  4}, function(err, Button) { addButton(Button); $('#btn-04').click(function(e) {e.preventDefault(); Button.setOn(); Button.setOff(); }); });
     board.withAnalogInput({pin:  'A0'}, function(err, AnalogInput) { 
-      $('#interval-slide').change(function(e) {
-        AnalogInput.set($('#interval-slide').val());
-      });
-      
       AnalogInput.on('change', function(a) { 
-        //$('#interval-slide').val(a.value);
-        //$('#interval-value').val(a.value + 'ms');
+        $('#interval-slide').val(a.value);
+        $('#interval-value').val(a.value + 'ms');
         walkLED.interval = a.value; startSequence(walkLED.direction, walkLED.interval); 
       });
     });

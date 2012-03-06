@@ -39,7 +39,7 @@ header#overview
         .btn-group           
           .btn.btn-dir#btn-02 &raquo;&raquo;
         .btn-group                  
-          input.range#interval-slide(type="range", min="0", max="1024", step="1", value="320")
+          input.range#interval-slide(type="range", min="0", max="1024", step="1", value="320", disabled="disabled")
           input.interval#interval-value(type="input", value="320ms",disabled="disabled")
   .row.info#connection-status
     .span12
@@ -57,7 +57,7 @@ header#overview
         | , all needed JavaScript is stored in 
         code public/scrupts/app.walkLED.js
         |  using 
-        a(href="#") RequireJS
+        a(href="http://requirejs.org/") RequireJS
         |  for loading dependencies. Please see RequireJS's manual for loading your scripts. Logging is done with the customized 
         code Logger.HTML.js
         |  in 
