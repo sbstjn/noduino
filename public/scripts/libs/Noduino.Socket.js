@@ -36,7 +36,8 @@ define(function(require, exports, module) {
   SocketNoduino.prototype.MODE_OUT    = 'out';
   SocketNoduino.prototype.MODE_IN     = 'in';  
   SocketNoduino.prototype.DIGITAL_ON    = '1';
-  SocketNoduino.prototype.DIGITAL_OFF   = '0';  
+  SocketNoduino.prototype.DIGITAL_OFF   = '0';
+  SocketNoduino.prototype.TYPE_MOTOR    = 0x30;
   SocketNoduino.prototype.TYPE_LED      = 0x31;
   SocketNoduino.prototype.TYPE_BUTTON   = 0x32;
   SocketNoduino.prototype.TYPE_ANALOGIN = 0x33;

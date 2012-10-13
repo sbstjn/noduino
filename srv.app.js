@@ -46,5 +46,12 @@ define(['kickstart', 'module', 'path', 'fs'], function (kickstart, module, path,
     res.render('example-walkLED', {jsApp: 'walkLED', active: 'examples', title: 'noduino', 'examples': examples});
   });
   
+  /**
+   * Catch request for serving motor example
+   */
+  srv.all('/example-motor.html', function(req, res) {
+    res.render('example-motor', {jsApp: 'motor', active: 'examples', title: 'noduino', 'examples': examples});
+  });
+
   return {'kickstart': kickstart, 'srv': srv};
 });

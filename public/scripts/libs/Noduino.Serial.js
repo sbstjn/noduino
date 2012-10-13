@@ -23,6 +23,7 @@ define(function(require, exports, module) {
   SerialNoduino.prototype.LOW         = '000';
   SerialNoduino.prototype.MODE_OUT    = 'out';
   SerialNoduino.prototype.MODE_IN     = 'in';  
+  SerialNoduino.prototype.TYPE_MOTOR    = 0x30;
   SerialNoduino.prototype.TYPE_LED      = 0x31;
   SerialNoduino.prototype.TYPE_BUTTON   = 0x32;
   SerialNoduino.prototype.TYPE_ANALOGIN = 0x33;
