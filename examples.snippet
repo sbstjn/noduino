@@ -28,7 +28,7 @@ Noduino.connect(function(err, board) {
     if (err) { return console.log(err); }
         
     LED.blink(250);
-    LED.on('on', function() }
+    LED.on('on', function() {
       console.log('LED is on!');
     });
   });
@@ -41,7 +41,7 @@ Noduino.connect(function(err, board) {
   board.withButton({pin: 13}, function(err, Button) {
     if (err) { return console.log(err); }
 
-    Button.on('push', function() }
+    Button.on('push', function() {
       console.log('Button pushed');
     });
     
