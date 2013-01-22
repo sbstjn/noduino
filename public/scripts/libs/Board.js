@@ -8,7 +8,7 @@
  * @url         https://github.com/semu/noduino
  */
 
-define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', './Speaker.js'], function(LEDObj, ButtonObj, AnalogInputObj, DigitalOutObj, SpeakerObj) {
+define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', './Speaker.js', './Motor.js'], function(LEDObj, ButtonObj, AnalogInputObj, DigitalOutObj, SpeakerObj, MotorObj) {
 
   /**
    * Create Board
@@ -91,6 +91,15 @@ define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', '.
   };
 
   /**
+   * Create Motor object on board
+   * @param object options
+   * @param function callback
+   */
+  Board.prototype.withMotor = function(options, next) {
+    this.with(this.c.TYPE_MOTOR, options, next);
+  };
+
+  /**
    * Create Speaker object on board
    * @param object options
    * @param function callback
@@ -135,6 +144,12 @@ define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', '.
         this.c.withDigitalOutput(options.pin, function(err, pin) {
           if (err) { return next(err); }
           next(null, new DigitalOut({"pin": pin, "type": what}, that.c));
+        });
+      break;
+      case this.c.TYPE_MOTOR:
+        this.c.withLED(options.pin, function(err, pin) {
+          if (err) { return next(err); }
+          next(null, new MotorObj({"pin": pin, "type": what}, that.c));
         });
       break;
       case this.c.TYPE_SPEAKER:
