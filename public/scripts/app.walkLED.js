@@ -94,7 +94,7 @@ require(["jquery", pv + "dropdown.js", pv + "prettify.js", pl + 'Noduino.js', pl
       e.preventDefault();
       
       if (!Noduino || !Noduino.connected) {
-        Noduino = new NoduinoObj({debug: true, host: 'http://localhost:8090', logger: {container: '#connection-log'}}, Connector, Logger);
+        Noduino = new NoduinoObj({debug: true, host: 'http://' + location.hostname + ':8090', logger: {container: '#connection-log'}}, Connector, Logger);
         Noduino.connect(function(err, board) {
           $('#connection-status .alert').addClass('hide'); 
           if (err) {
