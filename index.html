@@ -9,7 +9,7 @@ crw-rw-rw-   1 root       wheel      18,  16 24 Feb 22:00 tty.usbmodem1d11
 $ &gt; cd noduino
 $ &gt; git submodule update --init
 $ &gt; npm install
-$ &gt; node app.js
+$ &gt; node srv.web.js
 
 Listening on http://localhost:8080
 </pre></div></div><div class="row"><div class="span3"><p>See the included exmaples on this page or have a look at the example wiring for firing and catching events on your Arduino!</p></div><div class="span9"><pre class="prettyprint linenums">var Noduino = new NoduinoObj({debug: true, host: 'http://localhost:8090'}, Connector);
