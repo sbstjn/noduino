@@ -9,7 +9,13 @@
  */
  
 define(['kickstart', 'module', 'path', 'fs'], function (kickstart, module, path, fs) {
-  var kickstart = kickstart.withConfig({'name': 'localhost', 'port': 8080, 'path': './'});
+  var args = process.argv.splice(2);
+
+  var hostname = args[0] || 'localhost';
+  var port = args[1] || 8080;
+  var host = hostname + ':' + port;
+
+  var kickstart = kickstart.withConfig({'name': hostname, 'port': port, 'path': './'});
   var srv = kickstart.srv();
   
   /**
@@ -29,28 +35,28 @@ define(['kickstart', 'module', 'path', 'fs'], function (kickstart, module, path,
    * Catch request for serving home page
    */
   srv.all('/', function(req, res) {
-    res.render('home', {jsApp: 'main', active: 'home', title: 'noduino', 'examples': examples});
+    res.render('home', {hostname: hostname, jsApp: 'main', active: 'home', title: 'noduino', 'examples': examples});
   });
 
   /** 
    * Catch request for Getting Started page
    */
   srv.all('/getting-started.html', function(req, res) {
-    res.render('getting-started', {jsApp: 'none', active: 'getting-started', title: 'noduino', 'examples': examples});
+    res.render('getting-started', {hostname: hostname, jsApp: 'none', active: 'getting-started', title: 'noduino', 'examples': examples});
   });
 
   /** 
    * Catch request for serving walkLED example page
    */
   srv.all('/example-walkLED.html', function(req, res) {
-    res.render('example-walkLED', {jsApp: 'walkLED', active: 'examples', title: 'noduino', 'examples': examples});
+    res.render('example-walkLED', {hostname: hostname, jsApp: 'walkLED', active: 'examples', title: 'noduino', 'examples': examples});
   });
   
   /**
    * Catch request for serving motor example
    */
   srv.all('/example-motor.html', function(req, res) {
-    res.render('example-motor', {jsApp: 'motor', active: 'examples', title: 'noduino', 'examples': examples});
+    res.render('example-motor', {hostname: hostname, jsApp: 'motor', active: 'examples', title: 'noduino', 'examples': examples});
   });
 
   return {'kickstart': kickstart, 'srv': srv};
