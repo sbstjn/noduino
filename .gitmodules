@@ -1,3 +1,0 @@
-[submodule "duino"]
-	path = duino
-	url = git@github.com:semu/duino.git
