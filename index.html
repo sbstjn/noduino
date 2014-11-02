@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta property="fb:admins" content="669118929" /><title>Noduino – Control Arduino with Node.js, WebSockets and HTML5</title><link rel="stylesheet" href="styles/bootstrap/init.css"><link rel="stylesheet" href="styles/prettify.css"><link rel="stylesheet" href="styles/init.css"><script data-main="scripts/app.main" type="text/javascript" src="scripts/vendor/require-jquery.js"></script><script type="text/javascript" src="http://localhost:8090/socket.io/socket.io.js"></script></head><body><div style="z-index: 4;position:absolute;" class="navbar navbar-fixed-top"><div class="navbar-inner"><div class="container"><div class="nav-collapse"><ul class="nav"><li class="active"><a href="index.html">Home</a></li><li class=""><a href="getting-started.html">Getting Started                </a></li><li class="dropdown "><a href="#" data-toggle="dropdown" class="dropdown-toggle">Example Wirings <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="example-walkLED.html">Adjustable LED Walker</a></li></ul></li><li><a href="https://github.com/semu/noduino">View on GitHub &raquo;</a></li></ul><div class="nav-collapse pull-right"><ul class="nav"><li><a href="http://semu.mp">semu.mp</a></li></ul></div></div></div></div><a href="https://github.com/semu/noduino"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 10;" src="images/forkme.png" alt="Fork me on GitHub"></a></div><div class="container"><header id="overview" class="jumbotron subhead"><h1>noduino</h1><p class="lead">A simple and flexible JavaScript and Node.js Framework for accessing basic Arduino controls from Web Applications using HTML5, Socket.IO and Node.js.</p></header><div id="homeBoxes" class="row marketing"><div class="span4"><img src="images/glyphicons_155_show_thumbnails.png" class="bs-icon"/><h2>Easy Arduino Access</h2><p>Initialize your Arduino board, define registered pins and send commands. Use digital and analog read or write to control buttons or switch connected LEDs. <strong>Listen for events</strong> happening on your Arduino to control your Web Application with analog controls…</p></div><div class="span4"><img src="images/glyphicons_214_resize_small.png" class="bs-icon"/><h2>Client and Server in JS</h2><p>Thanks to Node.js and modern web browsers all server code as well as all client code is written in JavaScript. There is no difference in accessing your Arduino over <strong>WebSocket</strong> or a <strong>Serial</strong> connection. All methods and objects remain the same, written code is highly portable.</p></div><div class="span4"><img src="images/glyphicons_009_magic.png" class="bs-icon"/><h2>JS Proof of Concept</h2><p>The first release of <a href="">noduino</a> is build for fun and as a proof of concept. For no good reason I tried sending commands to my Arduino with <strong>JavaScript</strong> using a nice <strong>HTML5</strong> interface. Imagine controlling browser games with an old NES game pad!    
+</p></div></div><section id="homeContent"><div class="page-header"><h1>Connect HTML Interface to Arduino</h1></div><div class="row"><div class="span3"><p>Make sure your <strong>Arduino</strong> is connected with your computer, this commands works fine for me:
+</p></div><div class="span9"><pre class="prettyprint linenums">$ &gt; ls /dev | grep usb
+crw-rw-rw-   1 root       wheel      18,  17 24 Feb 22:54 cu.usbmodem1d11
+crw-rw-rw-   1 root       wheel      18,  16 24 Feb 22:00 tty.usbmodem1d11
+</pre></div></div><div class="row"><div class="span3"><p><a href="https://github.com/semu/noduino">Download noduino</a>, install needed packages with npm, fetch git submodules, upload duino's file <code>duino/src/du.ino</code> to your Arduino and you are good to go. An example on how to catch and fire events with an HTML interface is provided as well. Take a look at 
+<a href="example-walkLED.html">LED Walker</a>…
+</p></div><div class="span9"><pre class="prettyprint linenums">$ &gt; git clone git@github.com:semu/noduino.git
+$ &gt; cd noduino
+$ &gt; git submodule update --init
+$ &gt; npm install
+$ &gt; node srv.web.js
+
+Listening on http://localhost:8080
+</pre></div></div><div class="row"><div class="span3"><p>See the included examples on this page or have a look at the example wiring for firing and catching events on your Arduino!</p></div><div class="span9"><pre class="prettyprint linenums">var Noduino = new NoduinoObj({debug: true, host: 'http://localhost:8090'}, Connector);
+Noduino.connect(function(err, board) {
+  if (err) { return console.log(err); }
+  
+  console.log('Connected to board');
+});
+</pre></div></div><div class="row example"><div id="e1-exampleConnection" class="span12"><p><a href="#" id="e1-buttonConnect" class="btn"><i class="icon-refresh"></i> Connect to Arduino
+</a></p><div class="alert alert-info">Please connect to your Arduino using the button.</div><div class="alert hide alert-error">Unable to connect to Arduino!</div><div class="alert hide alert-success">Connection to Arduino established!</div></div></div><div class="page-header"><h1>Switching LED modes <small>Simple methods for switching LED modes, blinking and fading…</small></h1></div><div class="row"><div class="span3"><p>When using the example from above to connect to your <strong>Arduino</strong> it is very easy to 
+<strong>toggle an LED</strong> connected to a pin on you board. All data exchange between the web browser and server is handled with Socket.IO, on the server commands are send to Arduino using 
+<a href="https://github.com/ecto/duino">duino.</a> 
+<strong>Noduino</strong> enables 
+<strong>Real-Time Arduino</strong> control using WebSockets! Please see the 
+<a href="#communication">communication schema</a> to get how it works…
+</p></div><div class="span9"><pre class="prettyprint linenums">var Noduino = new NoduinoObj({debug: true, host: 'http://localhost:8090'}, Connector);
+Noduino.connect(function(err, board) {
+  if (err) { return console.log(err); }
+  board.withLED({pin: 13}, function(err, LED) {
+    if (err) { return console.log(err); }
+        
+    LED.blink(250);
+    LED.on('on', function() }
+      console.log('LED is on!');
+    });
+  });
+});
+</pre></div></div><div class="row example"><div id="e2-exampleConnection" class="span12"><p><a href="#" id="e2-buttonConnect" class="btn"><i class="icon-refresh"></i> Connect to Arduino
+</a></p><div class="alert alert-info">Please connect to your Arduino using the button.</div><div class="alert hide alert-error">Unable to connect to Arduino!</div><div class="alert hide alert-success">Connection to Arduino established!</div></div><div id="e2-secondStep" class="span12"><p><select id="e2-pinValue" class="span2"><option value="13">PIN: 13</option><option value="12">PIN: 12</option><option value="11">PIN: 11</option><option value="10">PIN: 10</option><option value="9">PIN: 09</option></select><input id="e2-interval" type="text" placeholder="Interval in Miliseconds" class="span3"/> 
+<a href="#" style="margin-top: 1px;" id="e2-buttonStart" class="btn"><i class="icon-retweet"></i> Start blinking LED 
+</a> 
+<a href="#" style="margin-top: 1px;" id="e2-buttonStop" class="btn"><i class="icon-off"></i> Stop 
+</a>         
+<label id="e2-status" style="position: relative; top: -2px;" class="label">LED off</label></p><div class="alert hide alert-info">Please connect to your Arduino using the button.</div><div class="alert hide alert-error">Connect to Arduino first!</div><div class="alert hide alert-success">Connection to Arduino established!</div></div></div><div class="page-header"><h1>Listening for Events on Arduino <small>Catch a button push event and fade on your LED</small></h1></div><div class="row"><div class="span3"><p>Buttons and LEDs provide a simple interface to listen for events. Use <code>Button.on()</code> or <code>LED.on()</code> for triggering your code if a button is pushed or your LED is switching modes. Multiple events for a single event are called the order they have been assigned.</p><p>Use <code>Board.receive()</code> for catching all incoming data streams. You probably need this if you plan to create a <strong>Real-Time Web Application</strong> with noduino. Buzzword…</p></div><div class="span9"><pre class="prettyprint linenums">var Noduino = new NoduinoObj({debug: true, host: 'http://localhost:8090'}, Connector);
+Noduino.connect(function(err, board) {
+  if (err) { return console.log(err); }
+  board.withButton({pin: 13}, function(err, Button) {
+    if (err) { return console.log(err); }
+
+    Button.on('push', function() }
+      console.log('Button pushed');
+    });
+    
+    Button.push();
+  });
+});</pre></div></div><div class="row example"><div id="e3-exampleConnection" class="span12"><p><a href="#" id="e3-buttonConnect" class="btn"><i class="icon-refresh"></i> Connect to Arduino
+</a></p><div class="alert alert-info">Please connect to your Arduino using the button. </div><div class="alert hide alert-error">Unable to connect to Arduino!</div><div class="alert hide alert-success">Connected! Button is <label class="label" id="buttonStatus">not pushed</label></div></div></div><div class="page-header"><h1>Getting started with noduino <small>AnalogInput, DigitalInputs and some nice LEDs</small></h1></div><div class="row"><div class="span12"><div class="hero-unit"><img src="wiring/walkLED.png"/></div><p>Use the example wiring from above and the provided code in  <code>examples/walkLED.js</code> for getting started using noduino. Read values from an analog input device like a potentiometer and watch for pressed buttons, all basic functions are shown in the example files. The needed 
+<code>.fzz</code> file for making changes with the awesome 
+<a href="http://fritzing.org">Fritzing Application</a> is included as well! If you create other wirings or find bugs in the provided ones please greate a 
+<a href="http://github.com/semu/noduino">Pull Request on GitHub</a>!
+</p></div></div><div class="row"><div class="span12"><p class="exampleLinks"><a href="example-walkLED.html" class="btn btn-success"><i class="icon-gift icon-white"></i> View Example
+</a></p></div></div><div class="page-header"><h1>About noduino <small>Thank You Open Source!</small></h1></div><div class="row"><div class="span12"><p>The <a href="https://github.com/semu/noduino">noduino</a> project was founded by 
+<a href="http://semu.mp">Sebastian Müller</a> in 2012 for fun and as a proof of concept for Node.js controlling external components over a dynamic web interface using HTML5 WebSockets. Thanks to the awesome 
+<a href="http://arduino.cc/">Arduino</a> project and the German 
+<a href="http://fritzing.org">Fritzing Project</a> it's easy to get started with basic prototyping. The already existing 
+<a href="https://github.com/ecto/duino">duino</a> project helped developing the first steps and is now an imported part of noduino's core components. Thanks to the Open Source community, you made this possible. Keep up the good work!
+</p><p>Some might think <em>What the f*ck is happening here? Are you insane?</em> But I can assure you I'm not crazy, my mom had me tested…</p><p>Please keep in mind Noduino is in a very early development state, all code is highly alpha and you should not build something serious on it. There are several known bugs, if you run into any problems with the provided examples just restart Noduino and try again ;) Did I mention is an early alpha version?</p></div></div></section><footer class="footer"><p class="pull-right"><a href="#">Back to top</a></p><p class="pull-left"><a href="http://arduino.cc"><img src="images/arduino.jpg" style="position: relative; margin-right: 18px; top: 5px; margin-left: 4px; border-radius: 3px;"></a></p><p>The <a href="https://semu.github.com/noduino">noduino</a> project was founded in 2012 and is maintained by
+<a href="http://semu.mp">Sebastian Müller</a>.
+</p><p>All Noduino code is licensed under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a> and available on 
+<a href="https://github.com/semu/noduino">GitHub</a> for free.  
+</p><p>Icons from <a href="http://glyphicons.com/">Glyphicons Free</a>. Layout based on 
+<a href="http://twitter.github.com/bootstrap/">twitter bootstrap framework</a>. 
+</p></footer></div><script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4f5681baf5a1f5227e000077');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script></body></html>
